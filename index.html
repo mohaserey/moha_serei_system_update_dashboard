@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ប្រព័ន្ធផ្ទាំងគ្រប់គ្រងមហាសិរី - Moha Serey System Dashboard (MSN)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1b4d3e;
+            --secondary-color: #d4af37;
+            --dark-color: #111827;
+            --light-bg: #f4f6f9;
+            --white: #ffffff;
+            --border-color: #e5e7eb;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-color);
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Sidebar Styling */
+        aside {
+            width: 280px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        .brand-box {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.15);
+        }
+        .brand-box img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+        }
+        .brand-box h1 {
+            font-size: 1.05rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+        .brand-box p {
+            font-size: 0.75rem;
+            color: #d1d5db;
+        }
+        .nav-menu {
+            list-style: none;
+            padding: 15px 0;
+            flex-grow: 1;
+        }
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 20px;
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .nav-menu li a:hover, .nav-menu li a.active {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        /* Main Layout */
+        main {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: var(--white);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        header h2 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        .user-profile i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+        /* Grid Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary-color);
+        }
+        .stat-card h3 {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .stat-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        /* Analytics Chart Grid */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        @media(max-width: 900px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .section-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .section-card h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        th {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-active { background: #d1fae5; color: #065f46; }
+        .badge-gov { background: #e0e7ff; color: #3730a3; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="brand-box">
+            <img src="mohaserey.jpg" alt="Moha Serey Logo" onerror="this.src='https://via.placeholder.com/50?text=MSN'">
+            <div>
+                <h1>បណ្ដាញមហាសិរី</h1>
+                <p>MSN System Dashboard</p>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#" class="nav-link active" onclick="switchTab('dashboard', event)"><i class="fas fa-chart-line"></i> ដက်សប៊อร์ดជាតិ (National Dashboard)</a></li>
+            <li><a href="#" class="nav-link" onclick="switchTab('governance', event)"><i class="fas fa-landmark"></i> អភិបាលកិច្ចមូលដ្ឋាន (GOV-008)</a></li>
+            <li><a href="#" class="nav-link" onclick="switchTab('economy', event)"><i class="fas fa-coins"></i> សន្ទស្សន៍សេដ្ឋកិច្ច (UES Engine)</a></li>
+            <li><a href="#" class="nav-link" onclick="switchTab('analytics', event)"><i class="fas fa-chart-pie"></i> វិភាគធនធានមនុស្ស (HCM Engine)</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main>
+        <header>
+            <h2 id="page-title">ប្រព័ន្ធគ្រប់គ្រងដက်សប៊อร์ดមហាសិរី (Moha Serey System Update Dashboard)</h2>
+            <div class="user-profile">
+                <i class="fas fa-user-shield"></i>
+                <span>មេណ្ឌក៏ មុនី (អគ្គស្ថាបនិក)</span>
+            </div>
+        </header>
+
+        <!-- Tab 1: National Dashboard -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>សមាជិកសរុប (Total Members)</h3>
+                    <div class="value">1,250,430 នាក់</div>
+                </div>
+                <div class="stat-card">
+                    <h3>ហាងដៃគូសរុប (Total Merchants)</h3>
+                    <div class="value">45,200 ហាង</div>
+                </div>
+                <div class="stat-card">
+                    <h3>មូលនិធិសរុប (Total Assets & Funds)</h3>
+                    <div class="value">$18,500,000</div>
+                </div>
+                <div class="stat-card">
+                    <h3>ការងារដែលបានបង្កើត (Jobs Created)</h3>
+                    <div class="value">85,600 កន្លែង</div>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="section-card">
+                    <h3><i class="fas fa-chart-area"></i> កំណើនសមាជិកបណ្ដាញតាមដំណាក់កាល (2026 - 2052)</h3>
+                    <canvas id="growthTrendChart" height="140"></canvas>
+                </div>
+                <div class="section-card">
+                    <h3><i class="fas fa-pie-chart"></i> ការបែងចែកមូលធនមនុស្ស (HCM)</h3>
+                    <canvas id="capitalDistChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h3><i class="fas fa-table"></i> សកម្មភាពប្រតិបត្តិការបណ្ដាញថ្នាក់ជាតិចុងក្រោយ</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ល.រ</th>
+                            <th>ខេត្ត រាជធានី</th>
+                            <th>កម្រិតតំណាង (Governance Level)</th>
+                            <th>សមាជិកសកម្ម</th>
+                            ស្ថានភាពប្រព័ន្ធ
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>រាជធានីភ្នំពេញ</td>
+                            <td>ថ្នាក់តំបន់ / រាជធានី</td>
+                            <td>250,000 នាក់</td>
+                            <td><span class="badge badge-active">ដំណើរការធម្មតា (Active)</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>ខេត្តសៀមរាប</td>
+                            <td>ថ្នាក់ខេត្ត</td>
+                            <td>52,100 នាក់</td>
+                            <td><span class="badge badge-active">ដំណើរការធម្មតា (Active)</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>ខេត្តបាត់ដំបង</td>
+                            <td>ថ្នាក់ខេត្ត</td>
+                            <td>48,900 នាក់</td>
+                            <td><span class="badge badge-gov">កំពុងរៀបចំរចនាសម្ព័ន្ធ</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 2: Local Governance (GOV-008) -->
+        <div id="governance" class="tab-content">
+            <div class="section-card">
+                <h3><i class="fas fa-sitemap"></i> រចនាសម្ព័ន្ធអភិបាលកិច្ចមូលដ្ឋាន (Local Governance Engine - GOV-008)</h3>
+                <p style="margin-bottom: 15px; line-height: 1.6;">
+                    ការកំណត់តំណែងស្វ័យប្រវត្តិតាមទីតាំងផ្អែកលើចំនួនសមាជិកសកម្មក្នុងអង្គភាពនីមួយៗពីថ្នាក់ភូមិរហូតដល់ថ្នាក់ជាតិ៖
+                </p>
+                <ul>
+                    <li><strong>Village Leader (មេភូមិ):</strong> យ៉ាងតិច 50 សមាជិកសកម្ម</li>
+                    <li><strong>Commune Leader (មេឃុំ/សង្កាត់):</strong> យ៉ាងតិច 500 សមាជិកសកម្ម</li>
+                    <li><strong>District Leader (ប្រធានស្រុក/ខណ្ឌ):</strong> យ៉ាងតិច 3,000 សមាជិកសកម្ម</li>
+                    <li><strong>Provincial Leader (ប្រធានខេត្ត):</strong> យ៉ាងតិច 50,000 សមាជិកសកម្ម</li>
+                    <li><strong>National Leader (ថ្នាក់ជាតិ):</strong> 1,000,000+ សមាជិកសកម្ម</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 3: UES Engine -->
+        <div id="economy" class="tab-content">
+            <div class="section-card">
+                <h3><i class="fas fa-atom"></i> ប្រព័ន្ធគណនាតម្លៃសេដ្ឋកិច្ចសកល (Universal Economic Score - UES)</h3>
+                <p style="margin-bottom: 15px; line-height: 1.6;">
+                    រាល់សកម្មភាពទាំងអស់ត្រូវបានបម្លែងជាពិន្ទុដោយស្វ័យប្រវត្តិដើម្បីធានាភាពយុត្តិធម៌ក្នុងការចែករំលែកផលចំណេញ (Profit Sharing) និងកម្មសិទ្ធិរយៈពេលវែង។
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Financial Capital (25%)</h3>
+                        <div class="value">សន្សំ/វិនិយោគ</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Business Capital (25%)</h3>
+                        <div class="value">លក់ដូរ/អាជីវកម្ម</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Knowledge Capital (20%)</h3>
+                        <div class="value">បង្រៀន/បណ្តុះបណ្តាល</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Network & Social (30%)</h3>
+                        <div class="value">ពង្រីកបណ្ដាញ/សង្គម</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Analytics -->
+        <div id="analytics" class="tab-content">
+            <div class="section-card">
+                <h3><i class="fas fa-chart-bar"></i> វិភាគសូចនាករធនធានមនុស្សសេដ្ឋកិច្ច (Human Capital Engine)</h3>
+                <canvas id="detailedAnalyticsChart" height="100"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript Scripts -->
+    <script>
+        function switchTab(tabId, event) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if(event) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+
+        // Growth Trend Chart
+        const ctxTrend = document.getElementById('growthTrendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: ['2026 (Foundation)', '2028', '2032 (Activation)', '2036', '2040 (Scaling)', '2052 (National)'],
+                datasets: [{
+                    label: 'ចំនួនសមាជិកបណ្ដាញ (រាប់ជាលាន)',
+                    data: [0.1, 0.5, 2.0, 3.5, 5.0, 10.0],
+                    borderColor: '#1b4d3e',
+                    backgroundColor: 'rgba(27, 77, 62, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Capital Distribution Chart
+        const ctxCap = document.getElementById('capitalDistChart').getContext('2d');
+        new Chart(ctxCap, {
+            type: 'doughnut',
+            data: {
+                labels: ['ហិរញ្ញវត្ថុ (FC)', 'អាជីវកម្ម (BC)', 'ចំណេះដឹង (KC)', 'បណ្ដាញ (NC)', 'សង្គម (SC)'],
+                datasets: [{
+                    data: [25, 25, 20, 20, 10],
+                    backgroundColor: ['#1b4d3e', '#d4af37', '#3b82f6', '#10b981', '#ef4444']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // Detailed Analytics Chart
+        const ctxDetail = document.getElementById('detailedAnalyticsChart').getContext('2d');
+        new Chart(ctxDetail, {
+            type: 'bar',
+            data: {
+                labels: ['សិស្ស/និស្សិត', 'កម្មករ/បុគ្គលិក', 'កសិករ', 'អាជីវករ', 'អ្នកជំនាញ'],
+                datasets: [{
+                    label: 'ចំនួនអ្នកចូលរួមតាមវិស័យ (នាក់)',
+                    data: [350000, 420000, 280000, 150000, 50430],
+                    backgroundColor: '#d4af37'
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html>
