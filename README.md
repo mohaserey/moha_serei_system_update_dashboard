@@ -1,5 +1,4 @@
-# moha_serey_system_update_dashboard
-Moha Serey System Update Dashboard (MSN)
+Moha Serei System Update Dashboard (MSN)
 
 "មនុស្សគ្រប់រូបមានតម្លៃសេដ្ឋកិច្ច។ រាល់ការចូលរួមមានតម្លៃ។"
 
@@ -7,13 +6,13 @@ Every individual has economic value. Every participation counts.
 
 🌟 Overview / សេចក្តីផ្តើម
 
-The Moha Serey System (MSN) is a participation-based national economic ecosystem platform designed to manage, calculate, and distribute economic value, governance rights, and digital assets across Cambodia from 2026 to 2052.
+The Moha Serei System (MSN) is a participation-based national economic ecosystem platform designed to manage, calculate, and distribute economic value, governance rights, and digital assets across Cambodia from 2026 to 2052.
 
-This repository houses the System Update Dashboard, providing real-time analytics, local geographic hierarchy management, human capital asset tracking, and transparent governance oversight.
+This repository houses the Moha serei System Update Dashboard, providing real-time analytics, local geographic hierarchy management (GOV-008), human capital asset tracking, and transparent governance oversight.
 
 🏛️ Core Architecture & Frameworks / ក្របខ័ណ្ឌស្ថាបត្យកម្មគ្រឹះ
 
-The MSN platform is built upon enterprise-grade governance and economic frameworks:
+The MSN platform is built upon enterprise-grade governance and economic frameworks defined in the system master documents:
 
 MSN-GOV-001 / GOV-008 (Master & Local Governance Framework): Automated provincial, district, commune, and village leadership hierarchy based on active member thresholds.
 
@@ -23,7 +22,7 @@ MSN-ECO-001 (Universal Economic Value / UES Engine): Automatically converts acti
 
 MSN-DIGI-001 (National Digital Ecosystem Architecture): An 8-layer digital architecture supporting super apps, e-wallets, marketplaces, and AI recommendation engines.
 
-👥 5 Participation Categories / ប្រភេទចូលរួមទាំង ៥ ក្នុងបណ្ដាញ
+👥 5 Participation Categories / ប្រភេទចូលរួមទាំង េស ក្នុងបណ្ដាញ
 
 MSN recognizes and values diverse forms of participation across all demographics:
 
@@ -39,44 +38,43 @@ MSN recognizes and values diverse forms of participation across all demographics
 
 📍 National Expansion & Geographic Hierarchy / រចនាសម្ព័ន្ធភូមិសាស្ត្រទូទាំងប្រទេស
 
-The dashboard supports full hierarchical data tracking across all 25 capitals and provinces of Cambodia:
+The dashboard supports full hierarchical data tracking across all capitals and provinces of Cambodia:
 
-National Level: 1,000,000+ Active Members
+National Leader: 1,000,000+ Active Members
 
-Provincial Level: 50,000+ Active Members (Provincial Leader)
+Provincial Leader: 50,000+ Active Members
 
-District / City Level: 3,000+ Active Members (District Leader)
+District / City Leader: 3,000+ Active Members
 
-Commune / Sangkat Level: 500+ Active Members (Commune Representative)
+Commune / Sangkat Representative: 500+ Active Members
 
-Village / Team Level: 50+ Active Members (Village Representative)
+Village / Team Representative: 50+ Active Members
 
 🚀 Key Dashboard Features / មុខងារស្នូលរបស់ដက်សប៊อร์ด
 
 National Impact Dashboard: Real-time metrics tracking total members, partner shops, active funds, and jobs created.
 
-Member Registration & Directory: Seamless form submission with dynamic dropdowns for provinces, districts, and communes throughout the country.
-
 Dynamic Analytics (Chart.js): Visualizes growth trends (2026–2052), capital distribution ratios, and sectoral participation.
 
-Governance Automation: Automated calculation of leadership ranks and voting eligibility based on contribution scores.
+Local Governance (GOV-008): Automated structure tracking from village levels to national representation.
+
+Universal Economic Score (UES): Transparent distribution engine based on financial, business, knowledge, network, and social contributions.
 
 🛠️ Technology Stack / បច្ចេកវិទ្យាប្រើប្រាស់
 
 Frontend: HTML5, CSS3, JavaScript (ES6+)
 
-Styling & Icons: Tailwind CSS / Custom CSS with Google Fonts (Kantumruy Pro / Battambang)
+Styling & Icons: Custom CSS with Google Fonts (Kantumruy Pro) & FontAwesome 6.4.0
 
-Visualizations: Chart.js for dynamic analytics and data representation
+Visualizations: Chart.js for dynamic trend and distribution analytics
 
-Branding: Integrated official logo asset (mohaserey.jpg)
+Branding: Integrated official logo asset (mohaserei.jpg)
 
 📂 Repository Structure / រចនាសម្ព័ន្ធកូដ
 
-├── Moha_Serey_System_Update.html      # Main operational system & registration app
-├── moha_serey_system_update_dashboard.html # National impact & analytics dashboard
-├── mohaserey.jpg                      # Official ecosystem logo
-└── README.md                          # Project documentation (This file)
+├── moha_serei_system_update_dashboard.html # National impact & analytics dashboard (MSN)
+├── mohaserei.jpg                          # Official ecosystem logo
+└── README.md                              # Project documentation (This file)
 
 
 📄 License & Governance / អាជ្ញាប័ណ្ណ និងអភិបាលកិច្ច
